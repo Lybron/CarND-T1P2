@@ -12410,9 +12410,11 @@ NAAWd5IkSZI0AP8Hmn+t2b2M0rAAAAAASUVORK5CYII=
 <li>conversion to grayscale and equalization of the histogram with openCV</li>
 <li>image rotation at random indexes with the dataset, as well as a random rotation angle of 0, 90, 180 or 270 degrees</li>
 <li>flipping images horizontally</li>
+<li>adding new augmented data to the initial dataset</li>
 </ul>
 <p><strong>Final Solution</strong></p>
 <p>Reading images in RBG and using image normalization as a pre-processing techniques yielded the best results.</p>
+<p>No new data was added due to computational limitations; however, this could have been a method to improve performance.</p>
 
 </div>
 </div>
@@ -14370,6 +14372,17 @@ IoQQQgghhOh5dOMihBBCCCGE6Hn+P9noyFlxu3swAAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Model-Selection">Model Selection<a class="anchor-link" href="#Model-Selection">&#182;</a></h3><p>LeNet-5, AlexNet and GoogleLeNet architectures were considered.</p>
+<p>The LeNer-5 was selected because it has a simple architecture, provides a good basis for image classification, and can be trained relatively quickly on a CPU--a computational constraint at the time of writing. The architecture was modified with the addition of dropout layers between fully connected layers.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Model-Architecture">Model Architecture<a class="anchor-link" href="#Model-Architecture">&#182;</a></h3>
 </div>
 </div>
@@ -14414,6 +14427,8 @@ IoQQQgghhOh5dOMihBBCCCGE6Hn+P9noyFlxu3swAAAAAElFTkSuQmCC
 <li>dropout</li>
 <li>number of epochs</li>
 </ul>
+<p>The model was tuned by trial and error.</p>
+<p>Converting to grayscale seemed to adversely affect network performance, compared to RGB images, achieving up to 89% accuracy on the validation set after paramater tuning.</p>
 <p>Decreasing sigma resulted in improved network performance. The network tended to peform better with smaller batch sizes of 64 and 128 in comparison to larger batches of 256, 512 and 1024, which resulted in a longer time to convergence and increased memory usage. The network also performed better with small learning rates.</p>
 <p>Adding dropout to the network improved overall performance; however, lower keep probabilites adversely affected network accuracy. For example, the final dropout probability of 0.75 performed better than a higher dropout of 0.5.</p>
 <p><strong>Solution</strong></p>
@@ -16247,6 +16262,26 @@ a = np.array([[ 0.24879643,  0.07032244,  0.12641572,  0.34763842,  0.07893497,
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenges-in-Image-Classification">Challenges in Image Classification<a class="anchor-link" href="#Challenges-in-Image-Classification">&#182;</a></h3><p>The following might have affected the netowrk's ability to classify new images:</p>
+<ul>
+<li><strong>viewpoint variation</strong>: the orientation of the sign with respect to the camera</li>
+<li><strong>scale variation</strong>: since signs are standardized, the real-world size of the signs would have been the same; however, their scale would have varied in images due to differences in distance from the camera</li>
+<li><strong>deformation</strong>: images could have been deformed by damage to the sign or degradation of the sign markings</li>
+<li><strong>occlusion</strong>: obscuration or clippin of portions of the signs in the images</li>
+<li><strong>luminance</strong>: differences in lighting could have affected the ability to correctly classify images</li>
+<li><strong>background clutter</strong>: the backgrounds behind signs in the images could have made them more difficult to identify</li>
+<li><strong>intra-class variation</strong>: this can have an effect where objects have differences in appearance; howeever, since traffic signs are standardized, this may have had less of an effect on the classification results</li>
+<li><strong>data uniformity</strong>: disproportaionate representation of some classes in the dataset could have affected the ability of the network to recognize some images compared to others.</li>
+</ul>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
